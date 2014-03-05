@@ -1,19 +1,48 @@
 <html>
 <head>
 	<title>Something</title>
+	<style type="text/css">
+		#lift-status {
+			position:absolute;
+			right:0;
+			top:0;
+			bottom:0;
+			width:40%;
+			margin:0;
+			border-width:0 0 0 1;
+			border-left:1px solid grey;
+			padding:5px;
+			font-family:monospace;
+			font-size:1.2em;
+		}
+		button {
+			cursor: pointer;
+		}
+
+		.floor {
+			display:block;
+			padding:1em;
+			font-size:16pt;
+			margin:0;
+			border:1px solid grey;
+			border-bottom:none;
+			min-width: 4em;
+			background-color:white;
+		}
+		.floor.current {
+			background-color:red;
+		}
+		.floor:hover {
+			background-color:grey;
+		}
+		.floor:last-child {
+			border-bottom: 1px solid grey;
+		}
+	</style>
 </head>
 <body>
-<button onclick="lift.call(10)">10</button>
-<button onclick="lift.call(9)">9</button>
-<button onclick="lift.call(8)">8</button>
-<button onclick="lift.call(7)">7</button>
-<button onclick="lift.call(6)">6</button>
-<button onclick="lift.call(5)">5</button>
-<button onclick="lift.call(4)">4</button>
-<button onclick="lift.call(3)">3</button>
-<button onclick="lift.call(2)">2</button>
-<button onclick="lift.call(1)">1</button>
-<textarea style="display:block;width:800px;height:500px;" id="lift-status"></textarea>
+<div id="shaft"></div>
+<div id="lift-status"></div>
 <script type="text/javascript" src="Elevator.js"></script>
 </body>
 </html>

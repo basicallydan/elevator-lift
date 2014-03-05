@@ -8,11 +8,28 @@ Arrai.prototype.insert = function (where) {
     this.splice.apply(this, toInsert);
 };
 
-function Elevator(floor) {
+var lift;
+
+function Elevator(floor, numberOfFloors) {
     this.moving = false;
     this.currentFloor = floor;
     var floorQueue = new Arrai();
     var direction;
+
+    var setCurrentFloor = function() {
+        var floors = document.querySelectorAll(".floor");
+        Array.prototype.forEach.call(floors, function(floor) {
+            if (+floor.value === this.currentFloor) {
+                floor.className = 'floor current';
+            } else {
+                floor.className = 'floor';
+            }
+        }.bind(this));
+    }.bind(this);
+
+    createFloors(numberOfFloors);
+
+    setCurrentFloor();
 
     reportStatus('Hello, I am your friendly neighbourhood lift. I am currently at floor', this.currentFloor + '.' ,'Please choose a floor for me to go to.');
     
@@ -80,6 +97,7 @@ function Elevator(floor) {
         } else {
             setTimeout(goToNextFloor, 500);
         }
+        setCurrentFloor();
     }.bind(this);
     
     this.open = function (done) {
@@ -89,13 +107,28 @@ function Elevator(floor) {
     };
 }
 
+function createFloors(n) {
+    var shaft = document.getElementById('shaft');
+    var b;
+    for (var i = n - 1; i >= 0; i--) {
+        b = document.createElement('button');
+        b.innerText = i === 0 ? 'G' : i;
+        b.value = i;
+        b.className = 'floor';
+        b.onclick = function () {
+            lift.call(+this.value);
+        };
+        shaft.appendChild(b);
+    }
+}
+
 function reportStatus () {
     var status = Array.prototype.join.apply(arguments, [' ']);
     var statusBox = document.getElementById('lift-status');
-    statusBox.value = status + '\n' + statusBox.value;
+    statusBox.innerText = status + '\n' + statusBox.innerText;
 }
 
-var lift = new Elevator(1);
+lift = new Elevator(1, 10);
 
 // When someone presses the button
 //// If there's nobody in the lift, and no other buttons pressed so far, go straight there - DONE
